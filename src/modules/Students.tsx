@@ -172,7 +172,10 @@ export function AddStudent() {
   const [form, setForm] = useState<any>({ ...BLANK, admissionNo: `ADM${2025100 + students.length + 1}` });
   const set = (k: string, v: any) => setForm((f: any) => ({ ...f, [k]: v }));
   const save = () => {
-    if (!form.name.trim()) return toast.error("Student name is required.");
+    if (!form.name.trim()) {
+      toast.error("Student name is required.");
+      return;
+    }
     const created = add("students", form, "stu");
     toast.success("Student admitted successfully.");
     goto(`students/profile/${created.id}`);
@@ -318,7 +321,10 @@ export function PromoteStudent() {
   const list = students.filter((s: any) => s.className === from);
 
   const promote = () => {
-    if (!picked.length) return toast.error("Select at least one student.");
+    if (!picked.length) {
+      toast.error("Select at least one student.");
+      return;
+    }
     picked.forEach((id) => update("students", id, { className: to, section }));
     toast.success(`${picked.length} student(s) promoted to ${to}-${section}.`);
     setPicked([]);
